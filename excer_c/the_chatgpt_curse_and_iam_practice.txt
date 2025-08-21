@@ -1,0 +1,641 @@
+Got you. Below are **12 bite‑sized, fully compilable C exercises** that together cover (almost) every pointer expression/theme from the cheat‑sheet.
+Each file has:
+
+* A **plot** (as a big comment at the top).
+* **Story Points** (`// [SP-x] …`) guiding you step by step.
+* **Hints** telling you **which section (§N)** of the cheat‑sheet to use.
+* `// TODO:` marks for what you must implement.
+
+> Compile each with something like:
+> `gcc -std=c11 -Wall -Wextra -O2 exNN.c -o exNN`
+
+---
+
+## **Exercise 01 – Pointer Declarations & Sizes**
+
+```c
+/* ex01.c
+ * PLOT:
+ *   Warm up. Declare a zoo of pointer types, print their sizes, and confirm the
+ *   size of the pointed-to objects using sizeof *p.
+ *
+ * STORY POINTS:
+ *   [SP-1] Declare at least: int*, char*, double*, int**, pointer-to-array, array-of-pointers, function pointer.
+ *   [SP-2] Initialize some with stack variables, some left uninitialized (but don't dereference uninitialized).
+ *   [SP-3] Print sizeof(pointer) vs sizeof(*pointer).
+ *   [SP-4] Explain in a comment why all pointer sizes are equal on your platform.
+ *
+ * HINTS:
+ *   - §1 Declarations
+ *   - §13 sizeof with pointers
+ */
+
+#include <stdio.h>
+
+int foo(double d) { return (int)d; }
+
+int main(void) {
+    // [SP-1] TODO: declare all pointer species here
+    int x = 42;
+    // e.g.:
+    int *pi = &x;                 // TODO complete the rest
+    char *pc = NULL;              // etc.
+    double *pd = NULL;
+    int **ppi = &pi;
+    int (*pa)[10] = NULL;
+    int *ap[10] = {0};
+    int (*fp)(double) = foo;
+
+    // [SP-3] Print sizes
+    printf("sizeof(pi)=%zu, sizeof(*pi)=%zu\n", sizeof(pi), sizeof(*pi));
+    // TODO: print for all the others
+
+    // [SP-4] In comment: explain equal pointer sizes (flat address space, LP64/LLP64 ABI)
+    return 0;
+}
+```
+
+---
+
+## **Exercise 02 – Address-of & Dereference with Structs and Pointers-to-Pointers**
+
+```c
+/* ex02.c
+ * PLOT:
+ *   Practice & and * on scalars, structs, and pointer-to-pointer. Mutate through all levels.
+ *
+ * STORY POINTS:
+ *   [SP-1] Define a struct S { int a; };
+ *   [SP-2] Create S s, S *ps, and int **pp pointing to an int inside the struct.
+ *   [SP-3] Write through ps-> and through **pp and show both mutate the same memory.
+ *
+ * HINTS:
+ *   - §2 Address-of & dereference
+ *   - §5 -> vs .
+ */
+
+#include <stdio.h>
+
+struct S { int a; };
+
+int main(void) {
+    // [SP-1] + [SP-2]
+    struct S s = { .a = 1 };
+    struct S *ps = &s;
+
+    int *p = &ps->a;
+    int **pp = &p;
+
+    // [SP-3] Mutate through all paths and print
+    *p = 10;
+    printf("s.a = %d\n", s.a);
+
+    **pp = 20;
+    printf("s.a = %d\n", s.a);
+
+    ps->a = 30;
+    printf("s.a = %d\n", s.a);
+
+    return 0;
+}
+```
+
+---
+
+## **Exercise 03 – Pointer Arithmetic & One‑Past Rule**
+
+```c
+/* ex03.c
+ * PLOT:
+ *   Walk an array with pointer arithmetic. Compute distance between two pointers.
+ *   Demonstrate one-past-the-end (without dereferencing).
+ *
+ * STORY POINTS:
+ *   [SP-1] Create int a[5] = {0,1,2,3,4}, get int *p = a.
+ *   [SP-2] Print *(p+i) using pointer arithmetic only.
+ *   [SP-3] Compute (a+5) - (a) and print it (expect 5).
+ *   [SP-4] Get a pointer one past the last element & show it's legal to compare but illegal to dereference.
+ *
+ * HINTS:
+ *   - §3 Pointer arithmetic
+ *   - §25 One past end
+ */
+
+#include <stdio.h>
+#include <stddef.h>
+
+int main(void) {
+    int a[5] = {0,1,2,3,4};
+    int *p = a;
+
+    // [SP-2]
+    for (int i = 0; i < 5; ++i) {
+        printf("%d ", *(p + i));
+    }
+    printf("\n");
+
+    // [SP-3]
+    ptrdiff_t diff = (a + 5) - a;
+    printf("diff = %td\n", diff);
+
+    // [SP-4]
+    int *past = a + 5;
+    printf("past > a? %d\n", past > a);
+    // *past; // TODO: Uncomment to see UB (DON'T actually run!)
+    return 0;
+}
+```
+
+---
+
+## **Exercise 04 – Arrays Decay, i\[a] == a\[i], and Precedence Traps**
+
+```c
+/* ex04.c
+ * PLOT:
+ *   Show array-to-pointer decay, prove i[a] == a[i], and play with *p++ vs (*p)++ vs *++p vs ++*p.
+ *
+ * STORY POINTS:
+ *   [SP-1] Make an array, get a pointer via decay.
+ *   [SP-2] Demonstrate i[a] == a[i].
+ *   [SP-3] Implement a loop that uses *p++ to print values, then reset and use (*p)++ to mutate.
+ *   [SP-4] Comment which expression increments what.
+ *
+ * HINTS:
+ *   - §4 Arrays & decay
+ *   - §10 Precedence traps
+ */
+
+#include <stdio.h>
+
+int main(void) {
+    int a[4] = {10, 20, 30, 40};
+    int *p = a;
+
+    // [SP-2]
+    int i = 2;
+    printf("a[i]=%d, i[a]=%d\n", a[i], i[a]);
+
+    // [SP-3] using *p++
+    p = a;
+    printf("Using *p++: ");
+    for (int j = 0; j < 4; ++j) {
+        printf("%d ", *p++); // *(p++)
+    }
+    printf("\n");
+
+    // Reset and use (*p)++ to mutate
+    p = a;
+    printf("Before (*p)++: %d\n", *p);
+    (*p)++;
+    printf("After  (*p)++: %d\n", *p);
+
+    // [SP-4] Comment in code what each variant does (already in cheat sheet)
+    return 0;
+}
+```
+
+---
+
+## **Exercise 05 – `const`, `volatile`, `restrict` Qualifiers**
+
+```c
+/* ex05.c
+ * PLOT:
+ *   Show const correctness, volatile (simulate HW changing a value), and a restrict-optimized add_vec.
+ *
+ * STORY POINTS:
+ *   [SP-1] const int *p1 (try to write through it -> should not compile).
+ *   [SP-2] volatile int v; spin on it, emulate external change.
+ *   [SP-3] Implement add_vec with restrict and benchmark (optional).
+ *
+ * HINTS:
+ *   - §6 qualifiers
+ *   - §20 restrict
+ */
+
+#include <stdio.h>
+#include <stddef.h>
+
+void add_vec(size_t n, float * restrict a,
+             const float * restrict b,
+             const float * restrict c)
+{
+    for (size_t i = 0; i < n; ++i)
+        a[i] = b[i] + c[i];
+}
+
+int main(void) {
+    int x = 10;
+    const int *p1 = &x;
+    // *p1 = 20; // [SP-1] Uncomment -> should be compile error
+
+    volatile int v = 0;
+    // [SP-2] We'll just show repeated reads (the compiler cannot optimize them away)
+    for (int i = 0; i < 3; ++i)
+        printf("volatile read #%d: %d\n", i, v);
+
+    float a[3], b[3] = {1,2,3}, c[3] = {4,5,6};
+    add_vec(3, a, b, c);
+    printf("a: %f %f %f\n", a[0], a[1], a[2]);
+
+    return 0;
+}
+```
+
+---
+
+## **Exercise 06 – `void *` Generic Stack + Safe Type Punning via `memcpy`**
+
+```c
+/* ex06.c
+ * PLOT:
+ *   Implement a generic stack using void* and byte-sized storage; push/pop ints and doubles safely using memcpy.
+ *   Also contrast with a UB strict-aliasing example (commented).
+ *
+ * STORY POINTS:
+ *   [SP-1] Define a stack struct with unsigned char *buffer, size, top.
+ *   [SP-2] Provide push(void *src, size_t sz) and pop(void *dst, size_t sz) using memcpy.
+ *   [SP-3] Push an int and a double, then pop them back correctly.
+ *   [SP-4] In a comment, show a UB cast you'd better not do.
+ *
+ * HINTS:
+ *   - §7 void*
+ *   - §1, §13, §26 memcpy
+ *   - Strict aliasing section from previous message
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct {
+    unsigned char *buf;
+    size_t cap, top;
+} ByteStack;
+
+int init_stack(ByteStack *s, size_t cap) {
+    s->buf = malloc(cap);
+    if (!s->buf) return -1;
+    s->cap = cap; s->top = 0;
+    return 0;
+}
+
+void free_stack(ByteStack *s) {
+    free(s->buf);
+    s->buf = NULL;
+    s->cap = s->top = 0;
+}
+
+int push(ByteStack *s, const void *src, size_t sz) {
+    if (s->top + sz > s->cap) return -1;
+    memcpy(s->buf + s->top, src, sz);
+    s->top += sz;
+    return 0;
+}
+
+int pop(ByteStack *s, void *dst, size_t sz) {
+    if (s->top < sz) return -1;
+    s->top -= sz;
+    memcpy(dst, s->buf + s->top, sz);
+    return 0;
+}
+
+int main(void) {
+    ByteStack st;
+    if (init_stack(&st, 1024)) return 1;
+
+    int    x = 1234;
+    double d = 3.14;
+
+    push(&st, &x, sizeof x);
+    push(&st, &d, sizeof d);
+
+    double d2;
+    int    x2;
+
+    pop(&st, &d2, sizeof d2);
+    pop(&st, &x2, sizeof x2);
+
+    printf("x2=%d, d2=%f\n", x2, d2);
+
+    // [SP-4] UB example (DO NOT DO):
+    // int *pi = (int *)&d; // Violates strict aliasing
+
+    free_stack(&st);
+    return 0;
+}
+```
+
+---
+
+## **Exercise 07 – Function Pointer Dispatcher**
+
+```c
+/* ex07.c
+ * PLOT:
+ *   Build a tiny command dispatcher using an array of function pointers.
+ *
+ * STORY POINTS:
+ *   [SP-1] Declare 3 int f(void) functions.
+ *   [SP-2] Put them in an array int (*fpa[])(void).
+ *   [SP-3] Ask the user which one to call, then call it via pointer.
+ *   [SP-4] Also keep a pointer to a function that returns another pointer type.
+ *
+ * HINTS:
+ *   - §8 Function pointers
+ */
+
+#include <stdio.h>
+
+int f0(void) { puts("f0"); return 0; }
+int f1(void) { puts("f1"); return 1; }
+int f2(void) { puts("f2"); return 2; }
+
+int *ret_ip(void) {
+    static int v = 42;
+    return &v;
+}
+
+int main(void) {
+    int (*fpa[])(void) = { f0, f1, f2 };
+
+    int choice = 0;
+    printf("0..2? ");
+    scanf("%d", &choice);
+
+    if (choice >= 0 && choice < (int)(sizeof(fpa)/sizeof(fpa[0]))) {
+        int r = fpa[choice]();
+        printf("result=%d\n", r);
+    }
+
+    int *(*pf2)(void) = ret_ip;
+    printf("ret_ip -> %d\n", *pf2());
+
+    return 0;
+}
+```
+
+---
+
+## **Exercise 08 – Pointer to Array vs Array of Pointers (2D Matrix Walk)**
+
+```c
+/* ex08.c
+ * PLOT:
+ *   Differentiate between int (*pa)[N] and int *ap[N]. Fill and print a matrix with each style.
+ *
+ * STORY POINTS:
+ *   [SP-1] Create a real 2D array int m[3][4].
+ *   [SP-2] Use int (*row)[4] = m; walk rows with pointer to array.
+ *   [SP-3] Create an array of 4 int pointers, each pointing into a 1D row, and print via ap[r][c].
+ *
+ * HINTS:
+ *   - §9 pointers to arrays vs arrays of pointers
+ *   - §24 multidimensional arrays
+ */
+
+#include <stdio.h>
+
+int main(void) {
+    int m[3][4] = {0};
+
+    // [SP-1] Fill
+    for (int r = 0; r < 3; ++r)
+        for (int c = 0; c < 4; ++c)
+            m[r][c] = r * 10 + c;
+
+    // [SP-2]
+    int (*row)[4] = m;
+    puts("Via pointer to array:");
+    for (int r = 0; r < 3; ++r) {
+        for (int c = 0; c < 4; ++c)
+            printf("%2d ", row[r][c]);
+        printf("\n");
+    }
+
+    // [SP-3]
+    int *ap[3];
+    for (int r = 0; r < 3; ++r)
+        ap[r] = m[r];
+
+    puts("Via array of pointers:");
+    for (int r = 0; r < 3; ++r) {
+        for (int c = 0; c < 4; ++c)
+            printf("%2d ", ap[r][c]);
+        printf("\n");
+    }
+
+    return 0;
+}
+```
+
+---
+
+## **Exercise 09 – `container_of` & intrusive singly-linked list**
+
+```c
+/* ex09.c
+ * PLOT:
+ *   Implement a tiny intrusive singly-linked list. Use container_of to get the parent struct from the next pointer.
+ *
+ * STORY POINTS:
+ *   [SP-1] Define struct Node { int data; struct Node *next; }.
+ *   [SP-2] Define a larger struct wrapping Node as a member (e.g., struct Thing { Node n; char name[16]; }).
+ *   [SP-3] Push a few Things into a Node* head, but recover Thing* via container_of when traversing.
+ *
+ * HINTS:
+ *   - §15 container_of
+ */
+
+#include <stdio.h>
+#include <stddef.h>
+#include <string.h>
+
+struct Node {
+    struct Node *next;
+};
+
+#define container_of(ptr, type, member) \
+    ((type *)((char *)(ptr) - offsetof(type, member)))
+
+struct Thing {
+    struct Node node;
+    char name[16];
+    int value;
+};
+
+void push(struct Node **head, struct Node *n) {
+    n->next = *head;
+    *head = n;
+}
+
+int main(void) {
+    struct Thing a = { .name = "A", .value = 1 };
+    struct Thing b = { .name = "B", .value = 2 };
+    struct Thing c = { .name = "C", .value = 3 };
+
+    struct Node *head = NULL;
+    push(&head, &a.node);
+    push(&head, &b.node);
+    push(&head, &c.node);
+
+    for (struct Node *n = head; n; n = n->next) {
+        struct Thing *t = container_of(n, struct Thing, node);
+        printf("Thing: %s -> %d\n", t->name, t->value);
+    }
+
+    return 0;
+}
+```
+
+---
+
+## **Exercise 10 – Bit-fields, Packed, and Volatile MMIO Mock**
+
+```c
+/* ex10.c
+ * PLOT:
+ *   Mock an MMIO register block, show volatile access, demonstrate why bit-fields are risky, then do masks instead.
+ *
+ * STORY POINTS:
+ *   [SP-1] Define a volatile packed struct Reg with bit-fields (mode:3, en:1, val:12).
+ *   [SP-2] Write to en via REG->en = 1; print to confirm.
+ *   [SP-3] Re-implement writes using masks & shifts with a plain volatile uint32_t register.
+ *
+ * HINTS:
+ *   - §16 bit-fields + pointer access
+ *   - §21 volatile pointers
+ */
+
+#include <stdio.h>
+#include <stdint.h>
+
+struct __attribute__((packed)) Reg {
+    unsigned mode : 3;
+    unsigned en   : 1;
+    unsigned val  : 12;
+};
+
+volatile struct Reg REG_bits = {0};         // Mock, not real HW
+volatile uint32_t  REG_plain = 0;           // Plain MMIO word
+
+#define MODE_Pos 0
+#define MODE_Msk (0x7u << MODE_Pos)
+#define EN_Pos   3
+#define EN_Msk   (0x1u << EN_Pos)
+#define VAL_Pos  4
+#define VAL_Msk  (0xFFFu << VAL_Pos)
+
+int main(void) {
+    // [SP-2] bit-fields
+    REG_bits.en = 1;
+    REG_bits.mode = 5;
+    REG_bits.val = 0xABC;
+    printf("bitfields: en=%u mode=%u val=%u\n", REG_bits.en, REG_bits.mode, REG_bits.val);
+
+    // [SP-3] masks
+    REG_plain |= EN_Msk;
+    REG_plain = (REG_plain & ~MODE_Msk) | (5u << MODE_Pos);
+    REG_plain = (REG_plain & ~VAL_Msk) | (0xABCu << VAL_Pos);
+    printf("plain: 0x%08X\n", (unsigned)REG_plain);
+
+    return 0;
+}
+```
+
+---
+
+## **Exercise 11 – Alignment, `_Alignof`, `_Alignas`, and Compound Literals**
+
+```c
+/* ex11.c
+ * PLOT:
+ *   Query alignment of several types, force alignas, and use compound literals to get temporary objects' addresses.
+ *
+ * STORY POINTS:
+ *   [SP-1] Print _Alignof for int, double, struct {char; double;}.
+ *   [SP-2] Declare _Alignas(32) int arr[8]; print its address mod 32.
+ *   [SP-3] Take the address of compound literals and print their values.
+ *
+ * HINTS:
+ *   - §17 Alignment
+ *   - §18 Compound literals
+ */
+
+#include <stdio.h>
+#include <stdalign.h>
+
+struct Foo { char c; double d; };
+
+int main(void) {
+    printf("_Alignof(int)=%zu\n", _Alignof(int));
+    printf("_Alignof(double)=%zu\n", _Alignof(double));
+    printf("_Alignof(struct Foo)=%zu\n", _Alignof(struct Foo));
+
+    _Alignas(32) int aligned[8];
+    printf("aligned addr %% 32 = %zu\n", (size_t)((uintptr_t)aligned % 32));
+
+    int *p = &(int){ 42 };
+    struct Foo *pf = &(struct Foo){ .c = 'X', .d = 3.14 };
+    printf("compound: *p=%d, pf->c=%c, pf->d=%f\n", *p, pf->c, pf->d);
+
+    return 0;
+}
+```
+
+---
+
+## **Exercise 12 – `restrict` vs no `restrict` Micro-benchmark (Optional) & Printing Pointers**
+
+```c
+/* ex12.c
+ * PLOT:
+ *   Show how to print pointers portably, and (optionally) compare performance of restrict vs non-restrict.
+ *
+ * STORY POINTS:
+ *   [SP-1] Declare two pointers p and q pointing to same array; print them with %p (cast to void*).
+ *   [SP-2] Implement two versions of a vector add: one with restrict, one without.
+ *   [SP-3] (Optional) Time both with large sizes (not shown—just structure it).
+ *
+ * HINTS:
+ *   - §28 printf("%p")
+ *   - §20 restrict
+ */
+
+#include <stdio.h>
+#include <stdint.h>
+#include <stddef.h>
+
+void add_nr(size_t n, float *a, const float *b, const float *c) {
+    for (size_t i = 0; i < n; ++i)
+        a[i] = b[i] + c[i];
+}
+void add_rs(size_t n, float * restrict a, const float * restrict b, const float * restrict c) {
+    for (size_t i = 0; i < n; ++i)
+        a[i] = b[i] + c[i];
+}
+
+int main(void) {
+    int x = 1, y = 2;
+    int *p = &x;
+    int *q = &y;
+    printf("p=%p q=%p\n", (void*)p, (void*)q);
+
+    float a[3], b[3] = {1,2,3}, c[3] = {4,5,6};
+    add_nr(3, a, b, c);
+    printf("a (nr): %f %f %f\n", a[0], a[1], a[2]);
+
+    add_rs(3, a, b, c);
+    printf("a (rs): %f %f %f\n", a[0], a[1], a[2]);
+    return 0;
+}
+```
+
+---
+
+### How to proceed
+
+1. **Do them in order**; they build intuition.
+2. After each, **write a tiny post‑mortem**: what rule did you touch, what was UB, what was legal.
+3. Want **solutions / reference outputs / extra “hard mode” branches** (e.g., add hazard pointers, RCU, atomics, tagged pointers)? Say which part and I’ll extend with full implementations + diagrams.

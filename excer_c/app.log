@@ -1,0 +1,50 @@
+2025-07-27 12:29:56,528 - __main__ - INFO - Found ```c for Exercise_01_Pointer_Declarations_Sizes at line 15
+2025-07-27 12:29:56,528 - __main__ - INFO - Closed code block for Exercise_01_Pointer_Declarations_Sizes at line 55 -> Exercise_01_Pointer_Declarations_Sizes.c
+2025-07-27 12:29:56,528 - __main__ - INFO - Found ```c for Exercise_02_Address_of_Dereference_with_Structs_and_Pointers_to_Pointers at line 61
+2025-07-27 12:29:56,529 - __main__ - INFO - Closed code block for Exercise_02_Address_of_Dereference_with_Structs_and_Pointers_to_Pointers at line 100 -> Exercise_02_Address_of_Dereference_with_Structs_and_Pointers_to_Pointers.c
+2025-07-27 12:29:56,529 - __main__ - INFO - Found ```c for Exercise_03_Pointer_Arithmetic_OnePast_Rule at line 106
+2025-07-27 12:29:56,529 - __main__ - INFO - Closed code block for Exercise_03_Pointer_Arithmetic_OnePast_Rule at line 146 -> Exercise_03_Pointer_Arithmetic_OnePast_Rule.c
+2025-07-27 12:29:56,529 - __main__ - INFO - Found ```c for Exercise_04_Arrays_Decay_i_a_a_i_and_Precedence_Traps at line 152
+2025-07-27 12:29:56,529 - __main__ - INFO - Closed code block for Exercise_04_Arrays_Decay_i_a_a_i_and_Precedence_Traps at line 195 -> Exercise_04_Arrays_Decay_i_a_a_i_and_Precedence_Traps.c
+2025-07-27 12:29:56,529 - __main__ - INFO - Found ```c for Exercise_05_const_volatile_restrict_Qualifiers at line 201
+2025-07-27 12:29:56,529 - __main__ - INFO - Closed code block for Exercise_05_const_volatile_restrict_Qualifiers at line 243 -> Exercise_05_const_volatile_restrict_Qualifiers.c
+2025-07-27 12:29:56,529 - __main__ - INFO - Found ```c for Exercise_06_void_Generic_Stack_Safe_Type_Punning_via_memcpy at line 249
+2025-07-27 12:29:56,529 - __main__ - INFO - Closed code block for Exercise_06_void_Generic_Stack_Safe_Type_Punning_via_memcpy at line 327 -> Exercise_06_void_Generic_Stack_Safe_Type_Punning_via_memcpy.c
+2025-07-27 12:29:56,529 - __main__ - INFO - Found ```c for Exercise_07_Function_Pointer_Dispatcher at line 333
+2025-07-27 12:29:56,529 - __main__ - INFO - Closed code block for Exercise_07_Function_Pointer_Dispatcher at line 376 -> Exercise_07_Function_Pointer_Dispatcher.c
+2025-07-27 12:29:56,529 - __main__ - INFO - Found ```c for Exercise_08_Pointer_to_Array_vs_Array_of_Pointers_2D_Matrix_Walk at line 382
+2025-07-27 12:29:56,530 - __main__ - INFO - Closed code block for Exercise_08_Pointer_to_Array_vs_Array_of_Pointers_2D_Matrix_Walk at line 430 -> Exercise_08_Pointer_to_Array_vs_Array_of_Pointers_2D_Matrix_Walk.c
+2025-07-27 12:29:56,530 - __main__ - INFO - Found ```c for Exercise_09_container_of_intrusive_singly_linked_list at line 436
+2025-07-27 12:29:56,530 - __main__ - INFO - Closed code block for Exercise_09_container_of_intrusive_singly_linked_list at line 489 -> Exercise_09_container_of_intrusive_singly_linked_list.c
+2025-07-27 12:29:56,530 - __main__ - INFO - Found ```c for Exercise_10_Bit_fields_Packed_and_Volatile_MMIO_Mock at line 495
+2025-07-27 12:29:56,530 - __main__ - INFO - Closed code block for Exercise_10_Bit_fields_Packed_and_Volatile_MMIO_Mock at line 544 -> Exercise_10_Bit_fields_Packed_and_Volatile_MMIO_Mock.c
+2025-07-27 12:29:56,530 - __main__ - INFO - Found ```c for Exercise_11_Alignment_Alignof_Alignas_and_Compound_Literals at line 550
+2025-07-27 12:29:56,530 - __main__ - INFO - Closed code block for Exercise_11_Alignment_Alignof_Alignas_and_Compound_Literals at line 584 -> Exercise_11_Alignment_Alignof_Alignas_and_Compound_Literals.c
+2025-07-27 12:29:56,530 - __main__ - INFO - Found ```c for Exercise_12_restrict_vs_no_restrict_Micro_benchmark_Optional_Printing_Pointers at line 590
+2025-07-27 12:29:56,530 - __main__ - INFO - Closed code block for Exercise_12_restrict_vs_no_restrict_Micro_benchmark_Optional_Printing_Pointers at line 632 -> Exercise_12_restrict_vs_no_restrict_Micro_benchmark_Optional_Printing_Pointers.c
+2025-07-27 12:29:56,530 - __main__ - INFO - No ```c block found for How_to_proceed
+2025-07-27 12:30:17,859 - __main__ - INFO - Found ```c for Exercise_01_Pointer_Declarations_Sizes at line 15
+2025-07-27 12:30:17,859 - __main__ - INFO - Closed code block for Exercise_01_Pointer_Declarations_Sizes at line 55 -> Exercise_01_Pointer_Declarations_Sizes.c
+2025-07-27 12:30:17,859 - __main__ - INFO - Found ```c for Exercise_02_Address_of_Dereference_with_Structs_and_Pointers_to_Pointers at line 61
+2025-07-27 12:30:17,859 - __main__ - INFO - Closed code block for Exercise_02_Address_of_Dereference_with_Structs_and_Pointers_to_Pointers at line 100 -> Exercise_02_Address_of_Dereference_with_Structs_and_Pointers_to_Pointers.c
+2025-07-27 12:30:17,860 - __main__ - INFO - Found ```c for Exercise_03_Pointer_Arithmetic_OnePast_Rule at line 106
+2025-07-27 12:30:17,860 - __main__ - INFO - Closed code block for Exercise_03_Pointer_Arithmetic_OnePast_Rule at line 146 -> Exercise_03_Pointer_Arithmetic_OnePast_Rule.c
+2025-07-27 12:30:17,860 - __main__ - INFO - Found ```c for Exercise_04_Arrays_Decay_i_a_a_i_and_Precedence_Traps at line 152
+2025-07-27 12:30:17,860 - __main__ - INFO - Closed code block for Exercise_04_Arrays_Decay_i_a_a_i_and_Precedence_Traps at line 195 -> Exercise_04_Arrays_Decay_i_a_a_i_and_Precedence_Traps.c
+2025-07-27 12:30:17,860 - __main__ - INFO - Found ```c for Exercise_05_const_volatile_restrict_Qualifiers at line 201
+2025-07-27 12:30:17,860 - __main__ - INFO - Closed code block for Exercise_05_const_volatile_restrict_Qualifiers at line 243 -> Exercise_05_const_volatile_restrict_Qualifiers.c
+2025-07-27 12:30:17,860 - __main__ - INFO - Found ```c for Exercise_06_void_Generic_Stack_Safe_Type_Punning_via_memcpy at line 249
+2025-07-27 12:30:17,860 - __main__ - INFO - Closed code block for Exercise_06_void_Generic_Stack_Safe_Type_Punning_via_memcpy at line 327 -> Exercise_06_void_Generic_Stack_Safe_Type_Punning_via_memcpy.c
+2025-07-27 12:30:17,860 - __main__ - INFO - Found ```c for Exercise_07_Function_Pointer_Dispatcher at line 333
+2025-07-27 12:30:17,860 - __main__ - INFO - Closed code block for Exercise_07_Function_Pointer_Dispatcher at line 376 -> Exercise_07_Function_Pointer_Dispatcher.c
+2025-07-27 12:30:17,861 - __main__ - INFO - Found ```c for Exercise_08_Pointer_to_Array_vs_Array_of_Pointers_2D_Matrix_Walk at line 382
+2025-07-27 12:30:17,861 - __main__ - INFO - Closed code block for Exercise_08_Pointer_to_Array_vs_Array_of_Pointers_2D_Matrix_Walk at line 430 -> Exercise_08_Pointer_to_Array_vs_Array_of_Pointers_2D_Matrix_Walk.c
+2025-07-27 12:30:17,861 - __main__ - INFO - Found ```c for Exercise_09_container_of_intrusive_singly_linked_list at line 436
+2025-07-27 12:30:17,861 - __main__ - INFO - Closed code block for Exercise_09_container_of_intrusive_singly_linked_list at line 489 -> Exercise_09_container_of_intrusive_singly_linked_list.c
+2025-07-27 12:30:17,861 - __main__ - INFO - Found ```c for Exercise_10_Bit_fields_Packed_and_Volatile_MMIO_Mock at line 495
+2025-07-27 12:30:17,861 - __main__ - INFO - Closed code block for Exercise_10_Bit_fields_Packed_and_Volatile_MMIO_Mock at line 544 -> Exercise_10_Bit_fields_Packed_and_Volatile_MMIO_Mock.c
+2025-07-27 12:30:17,861 - __main__ - INFO - Found ```c for Exercise_11_Alignment_Alignof_Alignas_and_Compound_Literals at line 550
+2025-07-27 12:30:17,861 - __main__ - INFO - Closed code block for Exercise_11_Alignment_Alignof_Alignas_and_Compound_Literals at line 584 -> Exercise_11_Alignment_Alignof_Alignas_and_Compound_Literals.c
+2025-07-27 12:30:17,861 - __main__ - INFO - Found ```c for Exercise_12_restrict_vs_no_restrict_Micro_benchmark_Optional_Printing_Pointers at line 590
+2025-07-27 12:30:17,861 - __main__ - INFO - Closed code block for Exercise_12_restrict_vs_no_restrict_Micro_benchmark_Optional_Printing_Pointers at line 632 -> Exercise_12_restrict_vs_no_restrict_Micro_benchmark_Optional_Printing_Pointers.c
+2025-07-27 12:30:17,861 - __main__ - INFO - No ```c block found for How_to_proceed

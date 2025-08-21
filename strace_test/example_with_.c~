@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+int main()
+{
+	if (fork() == 0)
+	{
+		printf("from child i say");
+	}else{
+		printf("from parent");
+
+	}
+	return (0);
+}

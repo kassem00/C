@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <unistd.h> // for getopt
+
+int main(int argc, char *argv[]) {
+    int opt;
+
+    // The options string: "a:b:c"
+    // a: → option 'a' takes an argument
+    // b: → option 'b' takes an argument
+    // c  → option 'c' has no argument
+    while ((opt = getopt(argc, argv, "a:b:c")) != -1) {
+        switch (opt) {
+        case 'a':
+            printf("Option a with value: %s\n", opt);
+            break;
+        case 'b':
+            printf("Option b with value: %s\n", optarg);
+            break;
+        case 'c':
+            printf("Option c (no value)\n");
+            break;
+        case '?': // Unknown option or missing value
+            printf("Unknown option: %c\n", optopt);
+            break;
+        default:
+            printf("Usage: %s [-a value] [-b value] [-c]\n", argv[0]);
+        }
+    }
+
+    // Print remaining non-option arguments
+    if (optind < argc) {
+        printf("Remaining arguments:\n");
+        for (int i = optind; i < argc; i++) {
+            printf("  %s\n", argv[i]);
+        }
+    }
+
+    return 0;
+}

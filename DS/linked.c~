@@ -1,0 +1,11 @@
+#include "ds.h"
+
+
+
+void createEmptyList(ST_list_t *list); // Setting list’s head to NULL and size to 0
+int insertToList(ST_list_t *list, int position, int data);
+int deleteFromList(ST_list_t *list, int position);
+int printList(ST_list_t *list);
+int getNodeData(ST_list_t *list, int nodeNumber, int *nodeData);
+int isTail(ST_listNode_t node);
+int isEmpty(ST_list_t *list);

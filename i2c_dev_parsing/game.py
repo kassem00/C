@@ -1,0 +1,55 @@
+import pygame
+import time
+import os
+
+# Constants
+WIDTH, HEIGHT = 800, 600
+BALL_RADIUS = 20
+SPEED_SCALE = 0.02  # adjust based on sensitivity
+
+# Read from accelerometer file
+def read_accel():
+    try:
+        with open("/sys/devices/platform/lis3lv02d/position", "r") as f:
+            content = f.read().strip().strip("()")
+            x, y, z = map(int, content.split(","))
+            return x, y, z
+    except Exception as e:
+        print("Accelerometer read error:", e)
+        return 0, 0, 0
+
+# Init pygame
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Accelerometer Ball Game")
+clock = pygame.time.Clock()
+
+# Ball position
+x, y = WIDTH // 2, HEIGHT // 2
+
+# Main game loop
+running = True
+while running:
+    clock.tick(60)
+    screen.fill((30, 30, 30))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    ay, ax, az = read_accel()
+
+    # Update ball position
+    x -= int(ax * SPEED_SCALE)
+    y += int(ay * SPEED_SCALE)
+
+    # Keep ball within screen bounds
+    x = max(BALL_RADIUS, min(WIDTH - BALL_RADIUS, x))
+    y = max(BALL_RADIUS, min(HEIGHT - BALL_RADIUS, y))
+
+    # Draw ball
+    pygame.draw.circle(screen, (0, 200, 255), (x, y), BALL_RADIUS)
+
+    pygame.display.flip()
+
+pygame.quit()

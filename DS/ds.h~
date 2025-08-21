@@ -1,0 +1,40 @@
+#ifndef MAIN_
+#define MAIN_
+#include <stdio.h>
+#include <stdlib.h>
+
+ typedef struct node{
+	int data;
+	struct node *next;
+}ST_listNode_t; // Node Type
+ typedef struct list{
+	ST_listNode_t *head;
+	int listSize;
+}ST_list_t; // List Type
+
+void createEmptyList(ST_list_t *list); // Setting list’s head to NULL and size to 0
+int insertToList(ST_list_t *list, int position, int data);
+int deleteFromList(ST_list_t *list, int position);
+int printList(ST_list_t *list);
+int getNodeData(ST_list_t *list, int nodeNumber, int *nodeData);
+int isTail(ST_listNode_t node);
+int isEmpty(ST_list_t *list);
+
++----------+-----+-----+-----+-----+-----+
+|  stack|     |     |     |     |     |
++----------+-----+-----+-----+-----+-----+
+
+typedef struct stack {
+	int elements[STACK_SIZE];
+	int top;
+}ST_stack_t; // Type
+
+void createEmptyStack(ST_stack_t *stack); // Setting stack’s top to -1
+int push(ST_stack_t *stack, int data);
+int pop(ST_stack_t *stack, int *data);
+int printStack(sST_stack_t *stack);
+int getStackTop(ST_stack_t *stack);
+int isFull(ST_stack_t *stack);
+int isEmpty(ST_stack_t *stack);
+
+#endif

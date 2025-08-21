@@ -1,0 +1,9 @@
+FILES=read_files_io.c 
+
+
+all:clean compile
+	./a.out my-db.db
+clean:
+	if [ -f a.out ]; then rm a.out; fi
+compile:
+	gcc $(FILES);
