@@ -1,0 +1,16 @@
+#include "gpio.h"
+
+
+
+void app_main(void)
+{
+    GPIO_INIT(GPIO5, 1);
+
+    while (1)
+    {
+	    GPIO_WRITE(GPIO5, 1);
+	    vTaskDelay(pdMS_TO_TICKS(DELAY_MS));
+	    GPIO_WRITE(GPIO5, 0);
+	    vTaskDelay(pdMS_TO_TICKS(DELAY_MS));
+    }
+}

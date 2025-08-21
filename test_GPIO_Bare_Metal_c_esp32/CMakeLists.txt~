@@ -1,0 +1,12 @@
+cmake_minimum_required(VERSION 3.16)
+
+# Define the project name
+project(test_GPIO_Bare_Metal)
+
+# Include the ESP-IDF project-specific setup
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+
+# Register the component with the appropriate source files
+idf_component_register(SRCS "gpio.c"
+                       INCLUDE_DIRS "."
+		       REQUIRES freertos)

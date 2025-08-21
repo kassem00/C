@@ -1,0 +1,9 @@
+idf_component_register(SRCS "gpio.c" "GPIO.c"
+                       INCLUDE_DIRS "." "GPIO" "GPIO/"
+		       REQUIRES freertos
+		       )
+
+# Set the sources for the project
+set(SOURCES
+    gpio.c
+)

@@ -1,0 +1,9 @@
+#ifndef REG
+#define REG
+
+#define GPIO_OUT_WITS_REG 0x3FF44008
+#define GPIO_OUT_WITC_REG 0x3FF4400C
+#define GPIO_ENABLE_REG 0x3FF44020
+
+
+#endif
