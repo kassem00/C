@@ -1,0 +1,26 @@
+CC = gcc
+CFLAGS =-g -Wall -Wextra -IApplication -ICard -IServer -ITerminal
+MODULES = Application/app.c Card/card.c Server/server.c Terminal/terminal.c
+OBJS = $(MODULES:.c=.o)
+
+# Executables
+APP = bin/app
+TEST = bin/test
+
+# Default: build main program
+all: $(APP)
+
+$(APP): main.c $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+# Compile .o files from .c with debug info
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Build test program (ignores parent main.c, uses tests/main.c instead)
+test: tests/main.c $(OBJS)
+	$(CC) $(CFLAGS) -o $(TEST) $^
+
+# Clean up
+clean:
+	rm -f $(APP) $(TEST) $(OBJS)
