@@ -36,8 +36,20 @@ void getCardPANTest(void) {
   if (x == CARD_OK)
     printf_color("CARD OK", GREEN, true);
 }
+void getTransactionDatetest(){
+ST_terminalData_t *termData;
 
-int main() {
-  getCardHolderNameTest();
-  return 0;
+ getTransactionDate(termData);
+
+}
+int main() 
+#ifndef TEST_CARD_MODULE
+	getCardHolderNameTest();
+#endif
+	
+#ifndef TEST_TERMINAL_MODULE
+getTransactionDatetest();
+#endif
+	
+	return 0;
 }
