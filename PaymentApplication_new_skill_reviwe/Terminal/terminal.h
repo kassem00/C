@@ -1,5 +1,6 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
+#include "../Card/card.h"
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>

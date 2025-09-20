@@ -1,0 +1,42 @@
+#define MYserver
+#define MYserver
+#define BUFFER 256
+
+#include <sys/socket.h>
+#include <string.h>
+#include <fcntl.h>
+#include <sys/sendfile.h>
+#include <unistd.h>
+#include <netinet/in.h>
+
+
+#endif
+
+
+int main(void){
+        int soc = socket(AF_INET, SOCK_STREAM, 0);
+        int client_fd;
+        char buffer[256] = {0};
+        char *f;
+        int opened_fd;
+
+        struct sockaddr_in addr = {
+                AF_INET,
+                0x4c3,/*port = 1219*/
+                0/*simmilar to 0.0.0.0 any connection*/
+        };
+
+        bind(soc, &addr, sizeof(addr));
+        listen(soc, 100);/* how many connection before server start to reject incoming requests*/
+        client_fd = accept(soc, 0, 0); /*address and address links*/
+        recv(soc, buffer, 256, 0);
+/* GET /file.html .... */
+
+        *f = buffer + 5;
+        *strchr(f, ' ') = 0;
+        opened_fd = open(f, O_RDONLY);
+        sendfile(client_fd, opened_fd, 0, 256);
+        close(opened_fd);
+        close(soc);
+        return 0;
+}
